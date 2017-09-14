@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="http://112.33.15.169:8181/arcgis_js_api/library/3.21/3.21/esri/css/esri.css" />
+<script type="text/javascript" src="http://112.33.15.169:8181/arcgis_js_api/library/3.21/3.21/init.js"></script>
+    <link rel="stylesheet" type="text/css" href="public/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="public/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="public/easyui/demo/demo.css">
+    <script type="text/javascript" src="public/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="public/easyui/jquery.easyui.min.js"></script>
+    
+</head>
+
+<body style="background-color:#444444">
+    <div style="position:absolute;top:18px;left:10px;z-index: 666;width:100px">
+    <table id="jd" class="easyui-datagrid"  style="width:250px;height:600px;"
+            data-options="singleSelect:true,collapsible:true,url:'http://localhost:8080/jiudian/servlet/Hello',method:'get'">
+        <thead>
+            <tr>
+                <th data-options="field:'name',width:100">酒店名</th>
+                <th data-options="field:'dizhi',width:200">地址</th>
+                <th data-options="field:'dianhua',width:100">电话</th>
+<!--                 <th data-options="field:'jingdu',width:100">jingdu</th>
+                <th data-options="field:'weidu',width:100">weidu</th> -->
+<!-- 				<th data-options="field:'star',width:90">jianjie</th> -->
+            </tr>
+        </thead>
+    </table>  
+    </div>
+    
+
+    
+	<div id="mapView"  style="position:absolute;top:18px;right:10px;height: 600px;width: 45%;"></div>
+
+<script type="text/javascript" src="index.js"></script>
+
+</body>
+</html>
