@@ -4,14 +4,29 @@
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
-  
   <servlet>
-  	<servlet-name>Hello</servlet-name>
-  	<servlet-class>benben.Servlet01</servlet-class>
+    <servlet-name>Hello</servlet-name>
+    <servlet-class>benben.Servlet01</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>Hello</servlet-name>
-  	<url-pattern>/servlet/Hello</url-pattern>
+    <servlet-name>Hello</servlet-name>
+    <url-pattern>/servlet/Hello</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Jiage</servlet-name>
+    <servlet-class>benben.Servlet02</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Jiage</servlet-name>
+    <url-pattern>/servlet/Jiage</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>Pingjia</servlet-name>
+    <servlet-class>benben.Servlet03</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Pingjia</servlet-name>
+    <url-pattern>/servlet/Pingjia</url-pattern>
+  </servlet-mapping>
 </web-app>
