@@ -34,10 +34,13 @@ require([
 	    center: [120.6353, 31.298886],
 	    zoom: 12,
 	    infoWindow: popup,
-	    basemap: "streets"
+	    basemap: "satellite",
+	    showlabels: true
 	  });
-	  var jiudian = new ArcGISDynamicMapServiceLayer("http://www.jacksung.cn:6080/arcgis/rest/services/luoyuxiang/te01/MapServer", {opacity: 0.9,visible:true});
+	  var jiudian = new ArcGISDynamicMapServiceLayer("http://www.jacksung.cn:6080/arcgis/rest/services/luoyuxiang/jiudianzb/MapServer", {opacity: 0.9,visible:true});
+	  
 	  map.addLayer(jiudian);
+
 	  map.on('load',function(){
 		  console.log("load over");
 	  });
@@ -45,7 +48,7 @@ require([
 	  map.on('click',function(event){
 		  console.log("you click the map!");
 		  console.log(event.mapPoint);
-		  identifyTask = new IdentifyTask("http://www.jacksung.cn:6080/arcgis/rest/services/luoyuxiang/te01/MapServer");
+		  identifyTask = new IdentifyTask("http://www.jacksung.cn:6080/arcgis/rest/services/luoyuxiang/jiudianzb/MapServer");
 		  identifyParams = new IdentifyParameters();
 		  identifyParams.tolerance = 3;
 		  identifyParams.returnGeometry = true;
@@ -62,7 +65,7 @@ require([
 					var feature = result.feature;
 					var layerName = result.layerName;
 					feature.attributes.layerName = layerName;
-					var info = "<div class=\"infoo\">酒店名：${name}</div>";
+					var info = "<div class=\"infoo\">名称：${NAME}</div>";
 					var taxParcelTemplate = new InfoTemplate(layerName,info);
 					feature.setInfoTemplate(taxParcelTemplate);
 
@@ -87,25 +90,17 @@ require([
 	  });
 	  
 	  
+	  $('#jd').datagrid({
+			onClickRow: function(index,row){
+		        console.log(row.id);
+		        console.log(row.jingdu);
+		        var pt = new Point(row.jingdu,row.weidu);
+		        map.centerAndZoom(pt,12);
+		        var jdid = row.id;
+		        $('#dg2').datagrid('load',"http://39.108.142.129:8080/jiudian/servlet/Jiage?id="+jdid);	            
+		        $("#tp1").attr("src","tupian/"+jdid+".jpg");
+		        $("#tp2").attr("src","tupian/"+jdid+"-.jpg");
+			}})
 	  
 	  
-	  
-	    $('#jd').datagrid({
-	    	onClickRow: function(index,row){
-	            console.log(row.id);
-	            console.log("11111111111");
-	    	}})
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	 	  
-
-
 	});	

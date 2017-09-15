@@ -14,27 +14,39 @@
 </head>
 
 <body style="background-color:#444444">
-    <div style="position:absolute;top:18px;left:10px;z-index: 666;width:100px">
-    <table id="jd" class="easyui-datagrid"  style="width:250px;height:600px;"
-            data-options="singleSelect:true,collapsible:true,url:'http://localhost:8080/jiudian/servlet/Hello',method:'get'">
+    <div style="position:absolute;top:5px;left:0px;z-index: 666;">
+    <table id="jd" class="easyui-datagrid"  style="width:400px;height:480px;"
+            data-options="singleSelect:true,collapsible:true,url:'http://39.108.142.129:8080/jiudian/servlet/Hello',method:'get'">
         <thead>
             <tr>
                 <th data-options="field:'name',width:100">酒店名</th>
                 <th data-options="field:'dizhi',width:200">地址</th>
                 <th data-options="field:'dianhua',width:100">电话</th>
-<!--                 <th data-options="field:'jingdu',width:100">jingdu</th>
-                <th data-options="field:'weidu',width:100">weidu</th> -->
-<!-- 				<th data-options="field:'star',width:90">jianjie</th> -->
             </tr>
         </thead>
     </table>  
     </div>
-    
+  
+ <div style="position:absolute;top:500px;left:0px;z-index: 666;">  
+ <table id="dg2" class="easyui-datagrid" style="width:400px;height:130px"
+	data-options="url:'http://39.108.142.129:8080/jiudian/servlet/Jiage?id=1',fitColumns:true,singleSelect:true,method:'get'">
+	<thead>
+		<tr>
+    		<th data-options="field:'leixing',width:100">类型</th>
+  		    <th data-options="field:'miaoshu',width:200">描述</th>
+            <th data-options="field:'jiage',width:100">价格</th>
+		</tr>
+	</thead>
+</table>
+</div> 
+
+
+<img id="tp1" src="tupian/1.jpg" style="position:absolute;left:405px;top:5px;height:320px;width:320px"/>   
+<img id="tp2" src="tupian/1-.jpg" style="position:absolute;left:405px;top:335px;height:320px;width:320px"/>      
 
     
-	<div id="mapView"  style="position:absolute;top:18px;right:10px;height: 600px;width: 45%;"></div>
+	<div id="mapView"  style="position:absolute;top:5px;right:10px;height: 600px;width: 45%;"></div>
 
 <script type="text/javascript" src="index.js"></script>
-
 </body>
 </html>
