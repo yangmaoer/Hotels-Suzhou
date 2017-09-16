@@ -8,17 +8,21 @@ import java.util.List;
 
 import org.junit.Test;
 
+
+
+//这个类是用来查询数据库中的信息的
 public class JiudianDao {
 	
 
+	//第一个方法：查询所有酒店
     public List<Jiudian> searchAll(){
     	String SQL =""; 
-    	List<Jiudian> jds = new ArrayList<Jiudian>();
-        SQL = "select * from jiudian";
+    	List<Jiudian> jds = new ArrayList<Jiudian>();//酒店的列表，用于保存查到的酒店。
+        SQL = "select * from jiudian";//SQL语句
         Connection connection = null;
         java.sql.Statement statement = null;
         try {
-            connection = DBDao.getConnection();
+            connection = DBDao.getConnection();//打开数据库连接
             statement = connection.createStatement();       
             ResultSet rSet = (ResultSet) statement.executeQuery(SQL);//得到数据库的查询结果,一个数据集
             //判断结果集是否有效
@@ -31,7 +35,7 @@ public class JiudianDao {
                 jd.setWeidu(rSet.getDouble("weidu"));
                 jd.setStar(rSet.getString("star"));
                 jd.setDizhi(rSet.getString("dizhi"));
-                jds.add(jd);
+                jds.add(jd);//将一个 酒店加入酒店列表
             }
             connection.close();
             statement.close();
@@ -42,15 +46,17 @@ public class JiudianDao {
             DBDao.closeConnection(connection);
         }
         
-        return jds;
+        return jds;//返回查到的酒店
     }
     
-    @Test
+    
+    
+    //第二个方法：根据酒店ID，查询一个酒店所有的价格信息。
     public List<Jiage> searchJiage(int id){
 
     	String SQL = "";
-    	List<Jiage> jgs = new ArrayList<Jiage>();
-        SQL = "select * from jiage where jiudianid = ?";
+    	List<Jiage> jgs = new ArrayList<Jiage>();//价格列表，用于保存查到的价格信息。
+        SQL = "select * from jiage where jiudianid = ?";//SQL语句
         Connection connection = null;
         java.sql.PreparedStatement pst = null;
         
@@ -69,7 +75,7 @@ public class JiudianDao {
                 jg.setLeixing(rSet.getString("leixing"));
                 jg.setMiaoshu(rSet.getString("miaoshu"));
                 jg.setJiage(rSet.getInt("jiage"));
-                jgs.add(jg);
+                jgs.add(jg);//将一个价格信息加入酒店列表
             }
             connection.close();
             pst.close();
@@ -80,16 +86,16 @@ public class JiudianDao {
             DBDao.closeConnection(connection);
         }
         
-        return jgs;
+        return jgs;//返回查到的价格信息
     }
     
     
-    
+    //第三个方法：查询所有的评价
     public List<Pingjia> searchPingjia(int id){
 
     	String SQL = "";
-    	List<Pingjia> pjs = new ArrayList<Pingjia>();
-        SQL = "select * from pingjia where jiudianid = ?";
+    	List<Pingjia> pjs = new ArrayList<Pingjia>();//评价列表，用于保存查到的评价
+        SQL = "select * from pingjia where jiudianid = ?";//SQL语句
         Connection connection = null;
         java.sql.PreparedStatement pst = null;
         
@@ -107,7 +113,7 @@ public class JiudianDao {
                 pj.setJiudianid(rSet.getInt("jiudianid"));
                 pj.setFenshu(rSet.getInt("fenshu"));
                 pj.setNeirong(rSet.getString("neirong"));
-                pjs.add(pj);
+                pjs.add(pj);//将一个评价添加到评价列表
             }
             connection.close();
             pst.close();
@@ -118,7 +124,7 @@ public class JiudianDao {
             DBDao.closeConnection(connection);
         }
         
-        return pjs;
+        return pjs;//返回查到的评价信息
     }
     
     

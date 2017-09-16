@@ -13,6 +13,7 @@
     
 </head>
 
+<!-- 酒店列表，定位在左边 -->
 <body style="background-color:#444444">
     <div style="position:absolute;top:5px;left:0px;z-index: 666;">
     <table id="jd" class="easyui-datagrid"  style="width:400px;height:480px;"
@@ -27,6 +28,7 @@
     </table>  
     </div>
   
+ <!-- 价格列表，定位在左下方 -->
  <div style="position:absolute;top:500px;left:0px;z-index: 666;">  
  <table id="dg2" class="easyui-datagrid" style="width:400px;height:130px"
 	data-options="url:'http://39.108.142.129:8080/jiudian/servlet/Jiage?id=1',fitColumns:true,singleSelect:true,method:'get'">
@@ -40,12 +42,13 @@
 </table>
 </div> 
 
-
+<!-- 酒店图片1 -->
 <img id="tp1" src="tupian/1.jpg" style="position:absolute;left:405px;top:5px;height:320px;width:320px"/>   
+<!-- 酒店图片2 -->
 <img id="tp2" src="tupian/1-.jpg" style="position:absolute;left:405px;top:335px;height:320px;width:320px"/>      
 
-    
-	<div id="mapView"  style="position:absolute;top:5px;right:10px;height: 600px;width: 45%;"></div>
+<!-- 用于创建地图的div -->    
+<div id="mapView"  style="position:absolute;top:5px;right:10px;height: 600px;width: 45%;"></div>
 
 <script type="text/javascript" src="index.js"></script>
 </body>

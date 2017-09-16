@@ -14,50 +14,36 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSON;
 
 /**
- * Servlet implementation class Servlet01
+ * 
+ * 第一个Servlet，用于查询所有的酒店
  */
 @WebServlet("/Servlet01")
 public class Servlet01 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public Servlet01() {
         super();
-        // TODO Auto-generated constructor stub
+
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * 对查询所有酒店的请求做出响应
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
 		JiudianDao jdd = new JiudianDao();
-		List<Jiudian> jds = jdd.searchAll();
-		
-
-		
-		String jsonString = JSON.toJSONString(jds);
-		
-		System.out.println(jsonString);
-		
+		List<Jiudian> jds = jdd.searchAll();			
+		String jsonString = JSON.toJSONString(jds);		
+		System.out.println(jsonString);		
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");		
 		response.getWriter().print(jsonString);
-
-
-		
-				
+					
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

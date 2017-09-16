@@ -30,6 +30,8 @@ require([
 				new Color([255, 0, 0]), 2), new Color([255, 255, 0, 0.25]))
 	}, domConstruct.create("div"));
 	
+	
+	//新建地图
 	  var map = new Map("mapView", {
 	    center: [120.6353, 31.298886],
 	    zoom: 12,
@@ -37,14 +39,15 @@ require([
 	    basemap: "satellite",
 	    showlabels: true
 	  });
+	  
+	  //新建酒店图层
 	  var jiudian = new ArcGISDynamicMapServiceLayer("http://www.jacksung.cn:6080/arcgis/rest/services/luoyuxiang/jiudianzb/MapServer", {opacity: 0.9,visible:true});
 	  
+	  //将酒店图层加入地图
 	  map.addLayer(jiudian);
 
-	  map.on('load',function(){
-		  console.log("load over");
-	  });
-	  
+
+	  //点击地图时进行查询
 	  map.on('click',function(event){
 		  console.log("you click the map!");
 		  console.log(event.mapPoint);
@@ -85,20 +88,26 @@ require([
 
 			map.infoWindow.setFeatures([deferred]);
 			map.infoWindow.show(event.mapPoint);
-			smap=map;
 		  		  
 	  });
 	  
 	  
+	  //点击酒店列表，更新价格列表和图片，地图定位到相应的酒店
 	  $('#jd').datagrid({
 			onClickRow: function(index,row){
-		        console.log(row.id);
-		        console.log(row.jingdu);
+				//新建一个对应于点击的酒店的点
 		        var pt = new Point(row.jingdu,row.weidu);
+		        //地图定位到上面的点
 		        map.centerAndZoom(pt,12);
+		        
 		        var jdid = row.id;
+		        
+		        //更新价格列表
 		        $('#dg2').datagrid('load',"http://39.108.142.129:8080/jiudian/servlet/Jiage?id="+jdid);	            
+		        //更新图片1
 		        $("#tp1").attr("src","tupian/"+jdid+".jpg");
+		        
+		        //更新图片2
 		        $("#tp2").attr("src","tupian/"+jdid+"-.jpg");
 			}})
 	  

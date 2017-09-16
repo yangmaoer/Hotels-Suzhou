@@ -1,11 +1,14 @@
 package benben;
 
+//价格的实体类，对应于数据库里的价格表
 public class Jiage {
-	private int id;
-	private int jiudianid;
-	private String leixing;
-	private String miaoshu;
-	private int jiage;
+	private int id;//价格ID
+	private int jiudianid;//酒店ID
+	private String leixing;//房间类型
+	private String miaoshu;//房间描述
+	private int jiage;//房间价格
+	
+	//下面是GET和SET方法
 	public int getId() {
 		return id;
 	}

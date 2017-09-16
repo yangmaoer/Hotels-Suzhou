@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
+//这个类是用来连接数据库的
 public class DBDao {
-    private static String USER = "root";
-    private static String PASSWORD = "123456";
-    private static String DB_URL = "jdbc:mysql://localhost:3306/benben";
+    private static String USER = "root";//数据库用户名
+    private static String PASSWORD = "123456";//密码
+    private static String DB_URL = "jdbc:mysql://localhost:3306/benben";//连接地址
     private static String DB_DRIVER = "com.mysql.jdbc.Driver";
 //  private static String SQL = "";
     private static Connection connection = null;

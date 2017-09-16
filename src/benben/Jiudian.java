@@ -1,13 +1,14 @@
 package benben;
 
+//酒店的实体类，对应于数据库中的酒店表
 public class Jiudian {
-	private int id;
-	private String name;
-	private String dizhi;
-	private String dianhua;
-	private Double jingdu;
-	private Double weidu;
-	private String star;
+	private int id;//酒店的ID
+	private String name;//酒店的名字
+	private String dizhi;//酒店的地址
+	private String dianhua;//酒店的电话
+	private Double jingdu;//酒店的经度
+	private Double weidu;//酒店的纬度
+	private String star;//酒店的星级
 	public int getId() {
 		return id;
 	}

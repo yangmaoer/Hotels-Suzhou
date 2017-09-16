@@ -1,10 +1,14 @@
 package benben;
 
+
+//评价的实体类，对应于数据库中的评价表
 public class Pingjia {
-	private int id;
-	private int jiudianid;
-	private int fenshu;
-	private String neirong;
+	private int id;//评价的ID
+	private int jiudianid;//评价的酒店ID
+	private int fenshu;//评价的分数
+	private String neirong;//评价的内容
+	
+	//下面是GET和SET方法
 	public int getId() {
 		return id;
 	}
