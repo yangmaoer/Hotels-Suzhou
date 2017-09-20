@@ -49,8 +49,6 @@ require([
 
 	  //点击地图时进行查询
 	  map.on('click',function(event){
-		  console.log("you click the map!");
-		  console.log(event.mapPoint);
 		  identifyTask = new IdentifyTask("http://www.jacksung.cn:6080/arcgis/rest/services/luoyuxiang/jiudianzb/MapServer");
 		  identifyParams = new IdentifyParameters();
 		  identifyParams.tolerance = 3;

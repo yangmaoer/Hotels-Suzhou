@@ -1,6 +1,6 @@
 package benben;
 
-//价格的实体类，对应于数据库里的价格表
+//这个类是价格的实体类，对应于数据库里的价格表
 public class Jiage {
 	private int id;//价格ID
 	private int jiudianid;//酒店ID

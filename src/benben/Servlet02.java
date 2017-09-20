@@ -31,18 +31,18 @@ public class Servlet02 extends HttpServlet {
 		List<Jiage> jgs = new ArrayList<Jiage>();
 		
 		
-		int jiudianid = Integer.parseInt(request.getParameter("id"));
+		int jiudianid = Integer.parseInt(request.getParameter("id"));//得到请求中的酒店ID
 		
-		jgs = jdd.searchJiage(jiudianid);
+		jgs = jdd.searchJiage(jiudianid);//根据酒店ID查询价格，得到价格列表
 		
-		String jsonString = JSON.toJSONString(jgs);
+		String jsonString = JSON.toJSONString(jgs);//转为JSON数据
 		
 		System.out.println(jsonString);
 		
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");		
-		response.getWriter().print(jsonString);
+		response.getWriter().print(jsonString);//返回数据
 		
 	}
 

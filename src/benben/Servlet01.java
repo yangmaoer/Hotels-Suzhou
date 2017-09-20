@@ -31,14 +31,14 @@ public class Servlet01 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		JiudianDao jdd = new JiudianDao();
-		List<Jiudian> jds = jdd.searchAll();			
-		String jsonString = JSON.toJSONString(jds);		
+		JiudianDao jdd = new JiudianDao();//用于查询数据库
+		List<Jiudian> jds = jdd.searchAll();	//查询所有的酒店		
+		String jsonString = JSON.toJSONString(jds);//转为JSON格式		
 		System.out.println(jsonString);		
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");		
-		response.getWriter().print(jsonString);
+		response.getWriter().print(jsonString);//返回数据
 					
 	}
 

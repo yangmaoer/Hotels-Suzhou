@@ -25,7 +25,7 @@ public class JiudianDao {
             connection = DBDao.getConnection();//打开数据库连接
             statement = connection.createStatement();       
             ResultSet rSet = (ResultSet) statement.executeQuery(SQL);//得到数据库的查询结果,一个数据集
-            //判断结果集是否有效
+            //判断结果集是否有效，循环结果集，创建出酒店列表
             while(rSet.next()){
                 Jiudian jd = new Jiudian();
                 jd.setId(rSet.getInt("id"));

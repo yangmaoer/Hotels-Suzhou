@@ -10,7 +10,7 @@ public class DBDao {
     private static String USER = "root";//数据库用户名
     private static String PASSWORD = "123456";//密码
     private static String DB_URL = "jdbc:mysql://localhost:3306/benben";//连接地址
-    private static String DB_DRIVER = "com.mysql.jdbc.Driver";
+    private static String DB_DRIVER = "com.mysql.jdbc.Driver";//连接mysql数据库的驱动
 //  private static String SQL = "";
     private static Connection connection = null;
     

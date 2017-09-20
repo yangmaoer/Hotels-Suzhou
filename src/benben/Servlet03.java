@@ -28,23 +28,23 @@ public class Servlet03 extends HttpServlet {
 	 * 对请求做出响应
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		JiudianDao jdd = new JiudianDao();
 		List<Pingjia> pjs = new ArrayList<Pingjia>();
 		
 		
-		int jiudianid = Integer.parseInt(request.getParameter("id"));
+		int jiudianid = Integer.parseInt(request.getParameter("id"));//得到请求中的酒店ID
 		
-		pjs = jdd.searchPingjia(jiudianid);
+		pjs = jdd.searchPingjia(jiudianid);//查询得到所有的评价
 		
-		String jsonString = JSON.toJSONString(pjs);
+		String jsonString = JSON.toJSONString(pjs);//转为JSON格式
 		
 		System.out.println(jsonString);
 		
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");		
-		response.getWriter().print(jsonString);
+		response.getWriter().print(jsonString);//返回数据
 			
 	}
 

@@ -1,6 +1,6 @@
 package benben;
 
-//酒店的实体类，对应于数据库中的酒店表
+//这个类是酒店的实体类，对应于数据库中的酒店表
 public class Jiudian {
 	private int id;//酒店的ID
 	private String name;//酒店的名字
