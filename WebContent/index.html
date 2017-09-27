@@ -1,55 +1,219 @@
-<!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>苏州五星级酒店查询系统</title>
-<link rel="stylesheet" href="http://112.33.15.169:8181/arcgis_js_api/library/3.21/3.21/esri/css/esri.css" />
-<script type="text/javascript" src="http://112.33.15.169:8181/arcgis_js_api/library/3.21/3.21/init.js"></script>
-    <link rel="stylesheet" type="text/css" href="public/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="public/easyui/themes/icon.css">
-    <link rel="stylesheet" type="text/css" href="public/easyui/demo/demo.css">
-    <script type="text/javascript" src="public/easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="public/easyui/jquery.easyui.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <title>苏州五星级酒店分布查询系统</title>
+        <link rel="stylesheet" type="text/css" href="ui/themes/default/easyui.css">
+        <link rel="stylesheet" type="text/css" href="ui/themes/icon.css">
+        <link rel="stylesheet" type="text/css" href="ui/demo/demo.css">
+        <script type="text/javascript" src="ui/jquery.min.js"></script>
+        <script type="text/javascript" src="ui/jquery.easyui.min.js"></script>
+        <link rel="stylesheet" href="https://js.arcgis.com/3.21/esri/css/esri.css">
+		<script src="https://js.arcgis.com/3.21/"></script>
+    </head>
     
-</head>
+<body>
+<select id="ss">
+</select><button id="ssbt">搜索</button>
 
-<!-- 酒店列表，定位在左边 -->
-<body style="background-color:#444444">
-    <div style="position:absolute;top:5px;left:0px;z-index: 666;">
-    <table id="jd" class="easyui-datagrid"  style="width:400px;height:480px;"
-            data-options="singleSelect:true,collapsible:true,url:'http://39.108.142.129:8080/jiudian/servlet/Hello',method:'get'">
+<div style="position:absolute;top:240px;left:0px;width:25%;height:110px">
+        <table id="jg" class="easyui-datagrid" style="width:100%;height:100%"
+        data-options="url:'http://39.108.142.129:8080/jiudian/servlet/Jiage?id=1',fitColumns:true,singleSelect:true,method:'get'">
         <thead>
-            <tr>
-                <th data-options="field:'name',width:100">酒店名</th>
-                <th data-options="field:'dizhi',width:200">地址</th>
-                <th data-options="field:'dianhua',width:100">电话</th>
-            </tr>
-        </thead>
-    </table>  
-    </div>
-  
- <!-- 价格列表，定位在左下方 -->
- <div style="position:absolute;top:500px;left:0px;z-index: 666;">  
- <table id="dg2" class="easyui-datagrid" style="width:400px;height:130px"
-	data-options="url:'http://39.108.142.129:8080/jiudian/servlet/Jiage?id=1',fitColumns:true,singleSelect:true,method:'get'">
-	<thead>
-		<tr>
-    		<th data-options="field:'leixing',width:100">类型</th>
-  		    <th data-options="field:'miaoshu',width:200">描述</th>
+        <tr>
+            <th data-options="field:'leixing',width:100">类型</th>
+            <th data-options="field:'miaoshu',width:200">描述</th>
             <th data-options="field:'jiage',width:100">价格</th>
-		</tr>
-	</thead>
-</table>
-</div> 
+        </tr>
+        </thead>
+        </table>
+</div>
 
-<!-- 酒店图片1 -->
-<img id="tp1" src="tupian/1.jpg" style="position:absolute;left:405px;top:5px;height:320px;width:320px"/>   
-<!-- 酒店图片2 -->
-<img id="tp2" src="tupian/1-.jpg" style="position:absolute;left:405px;top:335px;height:320px;width:320px"/>      
 
-<!-- 用于创建地图的div -->    
-<div id="mapView"  style="position:absolute;top:5px;right:10px;height: 600px;width: 45%;"></div>
+<img id="tp1" src="tupian/1.jpg" style="position:absolute;left:25%;top:0px;height:300px;width:25%"/> 
+<img id="tp2" src="tupian/1-.jpg" style="position:absolute;left:25%;top:320px;height:300px;width:25%"/>
 
-<script type="text/javascript" src="index.js"></script>
+
+
+<div id="pp" style="position:absolute;top:40px;left:0px;width:25%;height:200px;background-color:aliceblue"><h1></h1><p style="word-wrap: break-word;"></p></div>
+<div id="pj" style="position:absolute;top:350px;left:0px;width:25%;height:200px;background-color:aliceblue"><h1></h1><p style="word-wrap: break-word;"></p></div>
+
+<div id="mapView"  style="position:absolute;top:0px;right:0px;height: 600px;width: 50%;"></div>
+
+<script>
+
+
+
+require([
+			"esri/map",
+			"esri/InfoTemplate",
+			"esri/layers/ArcGISDynamicMapServiceLayer",
+			"esri/symbols/SimpleFillSymbol",
+			"esri/symbols/SimpleLineSymbol",
+			"esri/tasks/IdentifyTask",
+			"esri/tasks/IdentifyParameters",
+			"esri/dijit/Popup",
+			"dojo/_base/array",
+			"esri/Color",
+			"dojo/dom-construct",
+			"esri/layers/FeatureLayer",
+			"esri/dijit/Search",
+			"esri/geometry/Point",
+			"dojo/domReady!"
+         
+         
+         ], function(Map, InfoTemplate, ArcGISDynamicMapServiceLayer, SimpleFillSymbol,
+					SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup,
+					arrayUtils, Color, domConstruct,FeatureLayer,Search,Point) {
+	
+	
+	
+	var jiudians = [];
+
+	$.get("http://39.108.142.129:8080/jiudian/servlet/Hello",function(data){
+	    console.log(data);
+	    jiudians = data;
+	    
+	    for(var i=0;i<jiudians.length;i++){
+	        $("#ss").append("<option>"+jiudians[i].name +"</option>");
+	    }
+
+	    var index = 0;
+	    var jianjie = jiudians[index].star;
+	    var jdm = jiudians[index].name;
+	    var dizhi = jiudians[index].dizhi;
+	    var dianhua = jiudians[index].dianhua;
+	    $('#pp h1').html(jdm);
+	    $('#pp p').html("&nbsp&nbsp&nbsp"+"简介："+jianjie+"<br/>"+"&nbsp&nbsp&nbsp"+"地址："+dizhi+"<br/>"+"&nbsp&nbsp&nbsp"+"电话："+dianhua+"<br/>");
+	   $.get("http://39.108.142.129:8080/jiudian/servlet/Pingjia?id=1",function(result){
+	            $('#pj h1').html("住客评价");
+	            $('#pj p').html("&nbsp&nbsp&nbsp"+"评分："+result[0].fenshu+"<br/>"+"&nbsp&nbsp&nbsp"+"评价内容："+result[0].neirong+"<br/>"+"&nbsp&nbsp&nbsp"+"评分："+result[1].fenshu+"<br/>"+"&nbsp&nbsp&nbsp"+"评价内容："+result[1].neirong+"<br/>");
+	    })
+
+
+	})
+
+	$("#ssbt").click(function(){
+	    var index = $("#ss").prop('selectedIndex');
+	    var jdid = index + 1;
+	    var jianjie = jiudians[index].star;
+	    if(jianjie == undefined)jianjie = "无";
+	    var jdm = jiudians[index].name;
+	    var dizhi = jiudians[index].dizhi;
+	    var dianhua = jiudians[index].dianhua;
+	    var jingdu = jiudians[index].jingdu;
+	    var weidu = jiudians[index].weidu;
+	    
+	    $('#pp h1').html(jdm);
+	    $('#pp p').html("&nbsp&nbsp&nbsp"+"简介："+jianjie+"<br/>"+"&nbsp&nbsp&nbsp"+"地址："+dizhi+"<br/>"+"&nbsp&nbsp&nbsp"+"电话："+dianhua+"<br/>");
+	    
+	    $.get("http://39.108.142.129:8080/jiudian/servlet/Pingjia?id="+jdid,function(result){
+	            $('#pj h1').html("住客评价");
+	            $('#pj p').html("&nbsp&nbsp&nbsp"+"评分："+result[0].fenshu+"<br/>"+"&nbsp&nbsp&nbsp"+"评价内容："+result[0].neirong+"<br/>"+"&nbsp&nbsp&nbsp"+"评分："+result[1].fenshu+"<br/>"+"&nbsp&nbsp&nbsp"+"评价内容："+result[1].neirong+"<br/>");
+	    })
+
+	    //更新图片1
+	    $("#tp1").attr("src","tupian/"+jdid+".jpg");
+			        
+		//更新图片2
+		$("#tp2").attr("src","tupian/"+jdid+"-.jpg");
+		
+        //更新价格列表
+        $("#jg").datagrid('load',"http://39.108.142.129:8080/jiudian/servlet/Jiage?id="+jdid);
+		
+		
+		//定位
+		map.centerAndZoom(new Point(jingdu,weidu),14);
+
+
+
+
+	})
+
+
+	
+	
+	/*提示框样式*/
+	var popup = new Popup({
+		fillSymbol: new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+			new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+				new Color([255, 0, 0]), 2), new Color([255, 255, 0, 0.25]))
+	}, domConstruct.create("div"));
+	
+	
+	//新建地图
+	  var map = new Map("mapView", {
+	    center: [120.6353, 31.298886],
+	    zoom: 12,
+	    infoWindow: popup,
+	    basemap: "satellite",
+	    showlabels: true
+	  });
+	  
+	  //新建酒店图层
+	  var jiudian = new ArcGISDynamicMapServiceLayer("http://www.jacksung.cn:6080/arcgis/rest/services/luoyuxiang/jiudianzb/MapServer", {opacity: 0.9,visible:true});
+	  
+	  //将酒店图层加入地图
+	  map.addLayer(jiudian);
+
+
+	  //点击地图时进行查询
+	  map.on('click',function(event){
+		  identifyTask = new IdentifyTask("http://www.jacksung.cn:6080/arcgis/rest/services/luoyuxiang/jiudianzb/MapServer");
+		  identifyParams = new IdentifyParameters();
+		  identifyParams.tolerance = 3;
+		  identifyParams.returnGeometry = true;
+	      identifyParams.layerOption = IdentifyParameters.LAYER_OPTION_ALL;		  
+	      console.log(identifyParams.tolerance);
+		  identifyParams.geometry = event.mapPoint;
+		  identifyParams.mapExtent = map.extent;
+		  console.log(identifyParams.geometry);		  
+			var deferred = identifyTask
+			.execute(identifyParams)
+			.addCallback(function(response) {
+
+				return arrayUtils.map(response, function(result) {
+					var feature = result.feature;
+					var layerName = result.layerName;
+					feature.attributes.layerName = layerName;
+					var info = "<div class=\"infoo\">名称：${NAME}</div>";
+					var taxParcelTemplate = new InfoTemplate(layerName,info);
+					feature.setInfoTemplate(taxParcelTemplate);
+
+					if($(".outerPointer").css("display")=="block")
+					{
+						$(".outerPointer").css("opacity",1);
+					}
+					if($(".pointer").css("display")=="block")
+					{
+						$(".pointer").css("opacity",1);
+					}
+
+
+					return feature;
+				});
+			});
+
+			map.infoWindow.setFeatures([deferred]);
+			map.infoWindow.show(event.mapPoint);
+		  		  
+	  });
+	  
+	  	  
+	  
+	});	
+
+
+
+
+
+</script>
+
 </body>
+
+
+
+
+
+
+
 </html>
